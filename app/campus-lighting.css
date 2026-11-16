@@ -1,0 +1,114 @@
+.campus-lighting {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.campus-lighting > div { position: absolute; }
+.campus-lighting > div, .campus-lighting > div::before { animation-play-state: paused; }
+.campus-lighting.lighting-moving > div, .campus-lighting.lighting-moving > div::before { animation-play-state: running; }
+
+.portal-light {
+  background: radial-gradient(ellipse at 50% 49%, #64f5ff59, #11c4f429 40%, transparent 72%);
+  animation: portal-breathe 5.4s ease-in-out -.7s infinite;
+}
+.portal-light-start { inset: 60% 76% 28% 16%; animation-delay: -2.3s; }
+.portal-light-finish { inset: 17% 8.6% 69% 81%; }
+
+.portal-ground-reflection {
+  background:
+    radial-gradient(ellipse at 50% 16%, #a5ffff83, transparent 63%),
+    repeating-linear-gradient(153deg, transparent 0 8px, #5eeafe3a 9px 11px, transparent 12px 19px);
+  mask-image: radial-gradient(ellipse 52% 53% at 50% 40%, #000 10%, transparent 94%);
+  animation: portal-breathe 5.4s ease-in-out -.7s infinite;
+}
+.portal-ground-reflection-start {
+  inset: 68.6% 74% 26.2% 16.5%;
+  clip-path: polygon(18% 13%, 65% 0, 100% 48%, 45% 95%, 0 63%);
+  animation-delay: -2.3s;
+}
+.portal-ground-reflection-finish {
+  inset: 30.5% 11.2% 63.7% 81.6%;
+  clip-path: polygon(0 26%, 71% 0, 100% 36%, 78% 65%, 64% 100%, 34% 87%, 36% 65%);
+}
+
+.stone-bounce {
+  inset: 24% 8% 63.5% 79.5%;
+  background:
+    linear-gradient(154deg, transparent 24%, #15edff36 43%, #14a3d42b 59%, transparent 83%),
+    radial-gradient(ellipse at 53% 31%, #35dcfa8a, transparent 67%);
+  clip-path: polygon(14% 0, 24% 7%, 25% 27%, 33% 31%, 38% 43%, 62% 40%, 70% 32%, 75% 30%, 76% 6%, 88% 0, 89% 45%, 97% 52%, 86% 69%, 73% 71%, 63% 86%, 54% 89%, 45% 100%, 33% 88%, 37% 70%, 23% 65%, 19% 50%, 8% 44%);
+  animation: portal-breathe 5.4s ease-in-out -.7s infinite;
+}
+
+/* Limit the cool transmitted light to the clusters bordering the final portal. */
+.leaf-transmission {
+  inset: 26.7% 4.5% 65.6% 76.6%;
+  background:
+    radial-gradient(ellipse at 19% 54%, #49ffc878, #20817c36 29%, transparent 42%),
+    radial-gradient(ellipse at 84% 64%, #adff8073, #40d6aa35 20%, transparent 35%);
+  clip-path: polygon(0 66%, 7% 50%, 12% 51%, 12% 42%, 20% 44%, 21% 32%, 32% 29%, 35% 40%, 43% 35%, 50% 58%, 56% 54%, 59% 68%, 63% 58%, 69% 61%, 72% 34%, 79% 34%, 79% 20%, 88% 18%, 90% 30%, 100% 35%, 100% 73%, 94% 84%, 85% 90%, 81% 82%, 77% 91%, 68% 85%, 58% 96%, 54% 84%, 43% 88%, 36% 70%, 28% 77%, 19% 84%, 12% 81%, 7% 91%, 0 87%);
+  animation: portal-breathe 5.4s ease-in-out -.3s infinite;
+}
+
+.chest-bounce {
+  inset: 27.1% 10% 64.5% 81%;
+  background:
+    radial-gradient(ellipse 49% 22% at 53% 60%, #ffcf6873, #fca53b29 63%, transparent),
+    radial-gradient(ellipse 26% 43% at 53% 43%, #ffe8a363, transparent 91%);
+  clip-path: polygon(15% 0, 83% 0, 89% 39%, 100% 54%, 78% 68%, 74% 87%, 54% 100%, 26% 93%, 7% 70%, 0 48%);
+  animation: chest-glimmer 4.1s ease-in-out -1.1s infinite;
+}
+
+.water-glints {
+  opacity: .33;
+  overflow: hidden;
+}
+.water-glints::before {
+  content: '';
+  position: absolute;
+  inset: -24px 0 0;
+  background:
+    repeating-linear-gradient(177deg, transparent 0 9px, #74dcff45 10px 11px, #caffffca 11px 12px, transparent 13px 24px),
+    repeating-linear-gradient(90deg, transparent 0 3px, #2fc9fb45 4px 5px, transparent 6px 8px),
+    radial-gradient(ellipse at 54% 24%, #87f0ff57, transparent 67%);
+  animation: water-flow 2.8s linear -.6s infinite;
+}
+.water-glints-courtyard {
+  inset: 28.4% 27.8% 63% 69.1%;
+  clip-path: polygon(37% 0, 92% 11%, 93% 47%, 72% 54%, 70% 92%, 28% 100%, 10% 89%, 17% 61%, 35% 47%);
+}
+.water-glints-upper {
+  inset: 37% 4.1% 54.9% 91.3%;
+  clip-path: polygon(26% 11%, 82% 5%, 86% 53%, 61% 83%, 52% 100%, 30% 88%, 25% 72%);
+}
+.water-glints-upper::before { animation-delay: -1.7s; }
+.water-glints-lower {
+  inset: 43.1% 4.1% 48.5% 90.3%;
+  clip-path: polygon(21% 8%, 71% 6%, 78% 55%, 95% 84%, 78% 98%, 36% 95%, 11% 78%, 18% 52%);
+}
+.water-glints-lower::before { animation-duration: 2.2s; }
+.fountain-ripples {
+  inset: 61.7% 31.3% 34.5% 60.9%;
+  clip-path: polygon(0 60%, 49% 1%, 100% 45%, 56% 100%);
+}
+.fountain-ripples::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-radial-gradient(ellipse 55% 45% at 49% 45%, transparent 0 5px, #bdffff65 6px 7px, transparent 8px 13px);
+  opacity: .43;
+  animation: fountain-ripple 2.9s ease-out -1.2s infinite;
+}
+
+@keyframes portal-breathe { 0%, 100% { opacity: .53; } 50% { opacity: .95; } }
+@keyframes chest-glimmer { 0%, 100% { opacity: .48; } 42% { opacity: .91; } 69% { opacity: .63; } }
+@keyframes water-flow { to { transform: translateY(24px); } }
+@keyframes fountain-ripple { 0% { transform: scale(.88,.96); opacity: .17; } 46% { opacity: .43; } 100% { transform: scale(1.18,1.06); opacity: .19; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .campus-lighting > div, .campus-lighting > div::before { animation: none; }
+  .portal-light, .portal-ground-reflection, .stone-bounce, .leaf-transmission { opacity: .6; }
+  .chest-bounce { opacity: .65; }
+}

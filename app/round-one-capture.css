@@ -1,0 +1,253 @@
+.adventurer-party {
+  --console-x: calc(768 / 1672 * 100%);
+  --console-y: calc(501 / 941 * 100%);
+}
+
+.adventurer-party[data-phase='capturing'] .adventurer {
+  --pull-x: var(--start-x);
+  --pull-y: var(--start-y);
+  transform-origin: center bottom;
+  animation: adventurer-pull 1.82s linear var(--pull-delay) both;
+}
+
+.adventurer-party[data-phase='capturing'][data-capture-origin='round1'] .adventurer {
+  --pull-x: var(--finish-x);
+  --pull-y: var(--finish-y);
+}
+
+.adventurer-party[data-phase='capturing'] .adventurer-sprite {
+  animation: adventurer-pixel-glow 1.82s linear var(--pull-delay) both, adventurer-idle-to-raised 1.82s steps(1, end) var(--pull-delay) both;
+}
+
+.adventurer-raised-pose {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 107%;
+  aspect-ratio: 470 / 600;
+  translate: -50% 0;
+  opacity: 0;
+  background: url('/art/adventurer-raised.webp')
+    calc(var(--raised-frame-left) / (2172 - 470) * 100%)
+    calc(57 / (724 - 600) * 100%) / calc(2172 / 470 * 100%) auto no-repeat;
+  image-rendering: pixelated;
+  animation: adventurer-pixel-glow 1.82s linear var(--pull-delay) both, adventurer-raised 1.82s steps(1, end) var(--pull-delay) both;
+}
+.adventurer-raised-pose-blue { --raised-frame-left: 166; }
+.adventurer-raised-pose-red { --raised-frame-left: 845; }
+.adventurer-raised-pose-green { --raised-frame-left: 1524; }
+
+.adventurer-party[data-phase='capturing'] .adventurer-shadow {
+  animation: adventurer-lift-shadow .9s ease-out var(--pull-delay) both;
+}
+
+.adventurer-party[data-phase='capturing'] .adventurer::after {
+  content: '';
+  position: absolute;
+  top: 51%;
+  left: 10%;
+  width: 7%;
+  height: 5%;
+  background: #9cffff;
+  color: #18dfff;
+  box-shadow: -.23em .25em currentColor, -.55em .45em #68f5ff, -.8em .7em currentColor, -1.25em .65em #18dfff88, -1.55em 1.08em #4bfbffb3;
+  animation: adventurer-pixel-tail 1.82s steps(8, end) var(--pull-delay) both;
+}
+
+.adventurer-party[data-phase='capturing'] .adventurer::before {
+  content: '';
+  position: absolute;
+  width: 153%;
+  height: 52%;
+  left: -27%;
+  bottom: -7%;
+  background: url('/art/console-vortex-ring.png') center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 5px #05d8ff);
+  animation: adventurer-suction-ring 1.82s linear var(--pull-delay) both;
+}
+
+.round-one-capture {
+  position: absolute;
+  left: var(--console-x);
+  top: var(--console-y);
+  width: 0;
+  height: 0;
+  z-index: 1;
+  animation: round-one-capture 2.6s linear both;
+}
+
+.round-one-capture > span { position: absolute; }
+
+.console-spill {
+  left: calc(-1.65 * var(--adventurer-width));
+  top: calc(-1.25 * var(--adventurer-width));
+  width: calc(3.3 * var(--adventurer-width));
+  height: calc(2.5 * var(--adventurer-width));
+  background: radial-gradient(ellipse, #a6ffffc9, #0ae7ff69 32%, #00b3ff25 54%, transparent 71%);
+  mix-blend-mode: screen;
+  animation: console-spill 2.6s ease-out both;
+}
+
+.console-screen {
+  width: calc(1.35 * var(--adventurer-width));
+  height: calc(.9 * var(--adventurer-width));
+  left: calc(-.675 * var(--adventurer-width));
+  top: calc(-.54 * var(--adventurer-width));
+  clip-path: polygon(0 20%, 10% 20%, 10% 15%, 85% 0, 92% 4%, 100% 81%, 88% 81%, 88% 86%, 12% 100%, 3% 97%);
+  background: repeating-linear-gradient(0deg, #b7ffff 0 2px, #29defb 2px 4px, #cfffff 4px 6px);
+  mix-blend-mode: screen;
+  animation: console-screen 2.6s ease-out both;
+}
+
+.console-siphon {
+  left: calc(-4 * var(--adventurer-width));
+  top: calc(-.18 * var(--adventurer-width));
+  width: calc(4.34 * var(--adventurer-width));
+  height: calc(2.7 * var(--adventurer-width));
+  clip-path: polygon(94% 0, 100% 10%, 39% 65%, 39% 70%, 17% 92%, 17% 100%, 0 82%, 14% 69%, 14% 62%, 48% 35%, 48% 31%);
+  background: repeating-linear-gradient(147deg, transparent 0 6px, #28cbfb38 6px 9px, #6dffff6b 9px 11px, transparent 11px 19px);
+  mask-image: linear-gradient(75deg, transparent 3%, #000a 48%, black 75%);
+  mix-blend-mode: screen;
+  transform-origin: right top;
+  animation: console-siphon 2.05s ease-out .24s both;
+}
+
+.console-ring {
+  --ring-size: calc(2.48 * var(--adventurer-width));
+  width: var(--ring-size);
+  height: var(--ring-size);
+  top: calc(var(--ring-size) / -2);
+  left: calc(var(--ring-size) / -2);
+  background: url('/art/console-vortex-ring.png') center / contain no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 0 5px #0fe3ff);
+  animation: console-ring-in 1.78s steps(19, end) both;
+}
+.console-ring-middle { animation-delay: .31s; }
+.console-ring-inner { animation-delay: .62s; }
+
+.console-orbit {
+  --orbit-size: calc(2.18 * var(--adventurer-width));
+  width: var(--orbit-size);
+  height: var(--orbit-size);
+  left: calc(var(--orbit-size) / -2);
+  top: calc(var(--orbit-size) / -2);
+  animation: console-orbit 2.2s steps(28, end) .16s both;
+}
+.console-orbit::before, .console-orbit::after {
+  content: '';
+  position: absolute;
+  width: max(2px, calc(.09 * var(--adventurer-width)));
+  aspect-ratio: 1;
+  background: #e1ffff;
+  filter: drop-shadow(0 0 3px #20f5ff);
+}
+.console-orbit::before { left: 0; top: 50%; box-shadow: .18em -.65em #18dfff, .5em -1.13em #6cffff9c; }
+.console-orbit::after { right: 0; bottom: 50%; box-shadow: -.18em .65em #18dfff, -.5em 1.13em #6cffff9c; }
+
+.console-fragment {
+  --fragment-left: calc(var(--fragment-x) * var(--adventurer-width));
+  --fragment-top: calc(var(--fragment-y) * var(--adventurer-width));
+  width: max(2px, calc(var(--fragment-size) * .025 * var(--adventurer-width)));
+  aspect-ratio: 1;
+  background: #a4ffff;
+  box-shadow: 0 0 5px #00e5ff, .2em -.2em 0 -.04em #50f2ff;
+  animation: console-fragment 1.23s ease-in var(--fragment-delay) both;
+}
+
+.console-fragment:nth-child(3n) { background: #09cafa; }
+.console-fragment:nth-child(4n) { background: #ebffff; }
+
+.console-burst {
+  --burst-size: calc(1.9 * var(--adventurer-width));
+  width: var(--burst-size);
+  height: var(--burst-size);
+  top: calc(var(--burst-size) / -2);
+  left: calc(var(--burst-size) / -2);
+  background:
+    url('/art/console-vortex-ring.png') center / contain no-repeat,
+    radial-gradient(ellipse, #dbffffb0, #00e9ff42 45%, transparent 70%);
+  image-rendering: pixelated;
+  animation: console-burst .58s steps(7, end) 1.96s both;
+}
+
+.adventurers-paused[data-phase='capturing'] *,
+.adventurers-paused[data-phase='capturing'] .adventurer::before,
+.adventurers-paused[data-phase='capturing'] .adventurer::after { animation-play-state: paused; }
+
+@keyframes adventurer-pull {
+  0%, 18% { left: var(--pull-x); top: var(--pull-y); opacity: 1; transform: translate(-50%, -100%); }
+  35% {
+    left: calc(.95 * var(--pull-x) + .05 * var(--console-x));
+    top: calc(.92 * var(--pull-y) + .08 * var(--console-y) - 1.2%);
+    transform: translate(-50%, -100%) rotate(9deg) scale(.93, 1.04);
+  }
+  72% {
+    left: calc(.44 * var(--pull-x) + .56 * var(--console-x));
+    top: calc(.44 * var(--pull-y) + .56 * var(--console-y) - 2%);
+    opacity: 1;
+    transform: translate(-50%, -100%) rotate(14deg) scale(.65, .8);
+  }
+  91% { left: var(--console-x); top: var(--console-y); opacity: .85; transform: translate(-50%, -100%) rotate(18deg) scale(.15, .2); }
+  100% { left: var(--console-x); top: var(--console-y); opacity: 0; transform: translate(-50%, -100%) scale(.035); }
+}
+
+@keyframes adventurer-pixel-glow {
+  0%, 13% { filter: none; }
+  31% { filter: brightness(1.6) drop-shadow(1px 1px 0 #6afaff); }
+  62% { filter: brightness(1.3) drop-shadow(0 0 5px #04cfff); }
+  100% { filter: brightness(2.4) drop-shadow(0 0 6px #0cffff); }
+}
+@keyframes adventurer-idle-to-raised { 0% { opacity: 1; } 14%, 100% { opacity: 0; } }
+@keyframes adventurer-raised {
+  0% { opacity: 0; }
+  14% { opacity: 1; transform: rotate(-6deg); }
+  27%, 100% { opacity: 1; transform: rotate(0deg); }
+}
+@keyframes adventurer-suction-ring {
+  0%, 100% { opacity: 0; transform: scale(.45); }
+  25% { opacity: .9; transform: scale(.92); }
+  59% { opacity: .54; transform: scale(1.14); }
+  81% { opacity: .16; transform: scale(.95); }
+}
+@keyframes adventurer-lift-shadow { 0%, 20% { opacity: 1; } 100% { opacity: 0; transform: scale(.45); } }
+@keyframes adventurer-pixel-tail {
+  0%, 27%, 100% { opacity: 0; transform: translate(0, 0); }
+  44%, 68% { opacity: .95; transform: translate(-5px, 4px); }
+  87% { opacity: .42; transform: translate(-12px, 8px); }
+}
+@keyframes round-one-capture { 0%, 91% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes console-spill {
+  0%, 100% { opacity: 0; transform: scale(.55); }
+  20% { opacity: .65; transform: scale(.86); }
+  64% { opacity: .54; transform: scale(1.02); }
+  82% { opacity: .94; transform: scale(1.12); }
+}
+@keyframes console-screen { 0%, 100% { opacity: 0; } 19%, 81% { opacity: .9; } 54% { opacity: .43; } }
+@keyframes console-siphon { 0%, 100% { opacity: 0; transform: scale(.8, .8); } 30%, 65% { opacity: .85; transform: scale(1, 1); } }
+@keyframes console-fragment {
+  0% { opacity: 0; transform: translate(var(--fragment-left), var(--fragment-top)) scale(.4); }
+  22% { opacity: .92; transform: translate(calc(.93 * var(--fragment-left)), calc(1.08 * var(--fragment-top))) scale(1); }
+  67% { opacity: 1; transform: translate(calc(.42 * var(--fragment-left)), calc(.56 * var(--fragment-top))) scale(.9); }
+  100% { opacity: 0; transform: translate(0, 0) scale(.18); }
+}
+@keyframes console-ring-in {
+  0% { opacity: 0; transform: scale(1.37) rotate(-24deg); }
+  24% { opacity: .8; }
+  65% { opacity: .9; transform: scale(.64) rotate(55deg); }
+  100% { opacity: 0; transform: scale(.2) rotate(103deg); }
+}
+@keyframes console-orbit {
+  0% { opacity: 0; transform: scale(1.05) rotate(-35deg); }
+  28% { opacity: 1; }
+  70% { opacity: .8; transform: scale(.72) rotate(200deg); }
+  100% { opacity: 0; transform: scale(.25) rotate(340deg); }
+}
+@keyframes console-burst { 0% { opacity: .85; transform: scale(.3); } 100% { opacity: 0; transform: scale(1.37); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .adventurer-party[data-phase='capturing'] *,
+  .adventurer-party[data-phase='capturing'] .adventurer::before,
+  .adventurer-party[data-phase='capturing'] .adventurer::after { animation: none; }
+}
