@@ -59,51 +59,9 @@ npm start
 - **Fountain fish.** Watch the central fountain for a jump, or click or tap the basin to make the fish leap.
 - **The Round 1 laptop.** The three backpackers wait by the entrance until a page event starts their walk. A second event makes the laptop pull them through cyan pixel rings and off the map.
 
-## Token verification handoff
+## Backend team
 
-**Enter the Hunt** opens the token prompt on the homepage. The frontend module is in [`app/login/`](app/login/). Its [API adapter](app/login/verify-token.js) sends a same-origin `POST /api/hunt/verify-token` with `Content-Type: application/json` and a body of `{"token":"<secret token>"}`. Set up the route on the backend or forward it to the backend service.
-
-| Backend response | Frontend behavior |
-| --- | --- |
-| `2xx` with `{"verified":true}` | Close the prompt and dispatch `move to round1` followed by `round1jumanji`. The capture waits for the walk to finish. |
-| `2xx` with `{"verified":false}`, or `400`, `401`, `403`, or `422` | Keep the prompt open and tell the player their token was rejected. |
-| `429` | Tell the player to wait before trying again. |
-| Other responses or network errors | Keep the prompt open and report that verification is unavailable. |
-
-The backend owns verification, any session it creates, and authorization for protected routes. The two browser events only control the visuals. Until the endpoint is connected, the form reports verification as unavailable.
-
-### Trigger campus animations
-
-| Command | Effect |
-| --- | --- |
-| `move to round1` | Walk from the entrance to the laptop. |
-| `round1jumanji` | Pull the party into the laptop. |
-| `round1jumanji:reverse` | Reverse the pixel effects and bring the party back to the map. |
-| `move to round2` | Walk from Round 1 to The Campus Trail after the party is back on the map. |
-| `round2jumanji` | Pull the party into The Campus Trail magnifier. |
-| `round2jumanji:reverse` | Return the party from the magnifier to the map. |
-| `move to round3` | Walk from Round 2 to The Surprise Event. |
-| `round3jumanji` | Pull the party into the crown and open the Round 3 challenge. |
-| `round3jumanji:reverse` | Close the Round 3 challenge and return the party to the map. |
-
-When your backend confirms a game action, pass its command string to `dispatchHuntCommand(command)` from [app/hunt-commands.js](app/hunt-commands.js) in your browser-side API handler or event-stream listener. That helper dispatches a browser event for the scene. Game progress and authorization belong on the server.
-
-To preview the full sequence, paste this into the homepage browser console.
-
-```js
-[
-  'move to round1',
-  'round1jumanji',
-  'round1jumanji:reverse',
-  'move to round2',
-  'round2jumanji',
-  'round2jumanji:reverse',
-  'move to round3',
-  'round3jumanji',
-].forEach((command) => window.dispatchEvent(new Event(command)));
-```
-
-Valid commands queue in order while an animation is playing. The capture command also works from the entrance for previews, and reversing it returns the trio there. With reduced motion enabled, the same commands update positions immediately. Reload the page to reset the scene.
+See the [backend checklist](backend_team_readme_todo.md) for the API contracts, campus commands, and deployment checks.
 
 <details>
 <summary>Round 1 laptop effect</summary>
@@ -128,5 +86,3 @@ The homepage uses Next.js App Router and React. PixiJS renders the ambient parti
 | [`public/art/`](public/art/) | Campus artwork, logos, title graphics, and sprite sheets. |
 
 The current project implements the landing page at `/`, with the round cards linked from the navigation. The Grand Finale is listed on the map and in the round cards. Its quiz has yet to be implemented.
-
-The [backend handoff](docs/backend-handoff.md) covers token verification, progress commands, and the Monkeytyping score API.
