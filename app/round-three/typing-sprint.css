@@ -1,0 +1,32 @@
+.typing-sprint {
+  box-sizing: border-box;
+  width: min(42rem, calc(100% - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: clamp(1rem, 4vw, 2rem);
+  border: 2px solid #d9afff;
+  background: linear-gradient(165deg, #272049, #0b142b 65%);
+  color: #f9f3ff;
+  box-shadow: 0 0 0 4px #57388b, 0 0 32px #a8598055, inset 0 0 0 4px #130d32;
+  color-scheme: dark;
+}
+
+.typing-sprint::backdrop { background: #060b20bd; }
+.typing-sprint-header { display: flex; align-items: center; gap: .85rem; border-bottom: 1px solid #a17ada75; padding-bottom: 1rem; }
+.typing-sprint-header svg { width: clamp(30px, 8vw, 54px); height: auto; flex: none; }
+.typing-sprint-header p { margin: 0 0 .5rem; color: #e3c8ff; font-size: .875rem; }
+.typing-sprint h2 { margin: 0; color: #ffe2a0; font: clamp(.85rem, 3vw, 1.25rem)/1.6 'Press Start 2P', monospace; }
+.typing-sprint output { margin-left: auto; white-space: nowrap; color: #ffe2a0; font: bold 1rem monospace; }
+.typing-sprint form, .typing-sprint-play { display: grid; gap: .75rem; margin-top: 1rem; }
+.typing-sprint :is(form, .typing-sprint-play) p { margin: 0; }
+.typing-sprint label { font-weight: 700; }
+.typing-sprint :is(input, textarea) { box-sizing: border-box; width: 100%; min-height: 44px; padding: .65rem .75rem; border: 1px solid #b58ce7; background: #101027; color: inherit; font: inherit; }
+.typing-sprint textarea { resize: vertical; }
+.typing-sprint :is(input, textarea):focus-visible { outline: 2px solid #ffe2a0; outline-offset: 2px; }
+.sprint-primary, .sprint-return { min-height: 44px; padding: .55rem .9rem; border: 1px solid #d9afff; }
+.sprint-primary { background: #d9afff; color: #1e113a; font-weight: 800; box-shadow: 0 3px #8259bd; }
+.sprint-primary:disabled { opacity: .55; cursor: default; }
+.sprint-return { margin-top: 1rem; background: transparent; }
+.sprint-target { padding: .85rem; background: #171232; border-left: 3px solid #b58ce7; color: #cfc2e3; font: 1rem/1.7 monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+.sprint-target .is-correct { color: #9bffd8; }
+.sprint-target .is-incorrect { color: #ffb2ce; text-decoration: underline; }
+.sprint-target .is-current { color: #21143c; background: #ffe2a0; }

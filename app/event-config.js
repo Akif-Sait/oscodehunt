@@ -1,10 +1,14 @@
 export const eventConfig = {
-  dateLabel: 'Dec 23 – Dec 24',
-  entryPath: '/hunt',
+  series: 'Gameverse',
+  title: 'Tech Treasure Hunt',
+  host: 'OSCode – REVA University Chapter',
+  dateLabel: '25 November',
+  venue: 'Rangasthala',
+  location: 'REVA University, Bengaluru',
+  teamSize: 4,
+  feeLabel: '₹59 per person',
+  registrationUrl: 'https://forms.gle/Wj2UKVH4vcDYMVmHA',
   navigation: [
-    { label: 'Rules', href: '/rules' },
-    { label: 'Rounds', href: '/rounds' },
-    { label: 'FAQ', href: '/faq' },
-    { label: 'Leaderboard', href: '/leaderboard' },
+    { label: 'Rounds', href: '#rounds' },
   ],
 };

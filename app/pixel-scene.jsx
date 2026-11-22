@@ -9,12 +9,14 @@ import { RoundMarkers } from './round-display';
 import CampusSecrets from './campus-secrets';
 import CampusLighting from './campus-lighting';
 import AdventurerParty from './adventurer-party';
+import { dispatchHuntCommand, HUNT_COMMANDS } from './hunt-commands';
 
 TextureSource.defaultOptions.scaleMode = 'nearest';
 const campusArt = '/art/reva-campus-fog-garden.png';
 
 export default function PixelScene() {
   const sceneRef = useRef(null);
+  const mapRef = useRef(null);
   const [moving, setMoving] = useState(false);
   const pointer = useRef({ x: -1000, y: -1000 });
 
@@ -30,6 +32,16 @@ export default function PixelScene() {
     };
   }, []);
 
+  function startHunt() {
+    const map = mapRef.current;
+    const bounds = map.getBoundingClientRect();
+    if (bounds.top > 0 && bounds.bottom > window.innerHeight) {
+      map.scrollIntoView({ block: 'center' });
+    }
+    dispatchHuntCommand(HUNT_COMMANDS.round1);
+    dispatchHuntCommand(HUNT_COMMANDS.capture);
+  }
+
   return (
     <div
       ref={sceneRef}
@@ -42,7 +54,7 @@ export default function PixelScene() {
       }}
       onPointerLeave={() => { pointer.current = { x: -1000, y: -1000 }; }}
     >
-      <div className="campus-map">
+      <div className="campus-map" ref={mapRef}>
         <div className="campus-frame">
           <img
             className="campus-art"
@@ -62,7 +74,7 @@ export default function PixelScene() {
           <AmbientEffects pointer={pointer} moving={moving} />
         </Application>
       </div>
-      <HuntInterface />
+      <HuntInterface onHuntVerified={startHunt} />
     </div>
   );
 }

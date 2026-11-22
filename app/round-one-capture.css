@@ -3,19 +3,14 @@
   --console-y: calc(501 / 941 * 100%);
 }
 
-.adventurer-party[data-phase='capturing'] .adventurer {
-  --pull-x: var(--start-x);
-  --pull-y: var(--start-y);
+.adventurer-party:is([data-phase='capturing'], [data-phase='releasing']) .adventurer {
+  --pull-x: var(--walk-x0);
+  --pull-y: var(--walk-y0);
   transform-origin: center bottom;
   animation: adventurer-pull 1.82s linear var(--pull-delay) both;
 }
 
-.adventurer-party[data-phase='capturing'][data-capture-origin='round1'] .adventurer {
-  --pull-x: var(--finish-x);
-  --pull-y: var(--finish-y);
-}
-
-.adventurer-party[data-phase='capturing'] .adventurer-sprite {
+.adventurer-party:is([data-phase='capturing'], [data-phase='releasing']) .adventurer-sprite {
   animation: adventurer-pixel-glow 1.82s linear var(--pull-delay) both, adventurer-idle-to-raised 1.82s steps(1, end) var(--pull-delay) both;
 }
 
@@ -37,11 +32,11 @@
 .adventurer-raised-pose-red { --raised-frame-left: 845; }
 .adventurer-raised-pose-green { --raised-frame-left: 1524; }
 
-.adventurer-party[data-phase='capturing'] .adventurer-shadow {
+.adventurer-party:is([data-phase='capturing'], [data-phase='releasing']) .adventurer-shadow {
   animation: adventurer-lift-shadow .9s ease-out var(--pull-delay) both;
 }
 
-.adventurer-party[data-phase='capturing'] .adventurer::after {
+.adventurer-party:is([data-phase='capturing'], [data-phase='releasing']) .adventurer::after {
   content: '';
   position: absolute;
   top: 51%;
@@ -54,7 +49,7 @@
   animation: adventurer-pixel-tail 1.82s steps(8, end) var(--pull-delay) both;
 }
 
-.adventurer-party[data-phase='capturing'] .adventurer::before {
+.adventurer-party:is([data-phase='capturing'], [data-phase='releasing']) .adventurer::before {
   content: '';
   position: absolute;
   width: 153%;
@@ -172,9 +167,9 @@
   animation: console-burst .58s steps(7, end) 1.96s both;
 }
 
-.adventurers-paused[data-phase='capturing'] *,
-.adventurers-paused[data-phase='capturing'] .adventurer::before,
-.adventurers-paused[data-phase='capturing'] .adventurer::after { animation-play-state: paused; }
+.adventurers-paused:is([data-phase='capturing'], [data-phase='releasing']) *,
+.adventurers-paused:is([data-phase='capturing'], [data-phase='releasing']) .adventurer::before,
+.adventurers-paused:is([data-phase='capturing'], [data-phase='releasing']) .adventurer::after { animation-play-state: paused; }
 
 @keyframes adventurer-pull {
   0%, 18% { left: var(--pull-x); top: var(--pull-y); opacity: 1; transform: translate(-50%, -100%); }
@@ -247,7 +242,37 @@
 @keyframes console-burst { 0% { opacity: .85; transform: scale(.3); } 100% { opacity: 0; transform: scale(1.37); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .adventurer-party[data-phase='capturing'] *,
-  .adventurer-party[data-phase='capturing'] .adventurer::before,
-  .adventurer-party[data-phase='capturing'] .adventurer::after { animation: none; }
+  .adventurer-party:is([data-phase='capturing'], [data-phase='releasing']) *,
+  .adventurer-party:is([data-phase='capturing'], [data-phase='releasing']) .adventurer::before,
+  .adventurer-party:is([data-phase='capturing'], [data-phase='releasing']) .adventurer::after { animation: none; }
+}
+
+.adventurer-party[data-phase='releasing'] :is(.adventurer, .adventurer-sprite, .adventurer-raised-pose, .adventurer-shadow, .round-one-capture, .round-one-capture *),
+.adventurer-party[data-phase='releasing'] .adventurer::before,
+.adventurer-party[data-phase='releasing'] .adventurer::after {
+  animation-direction: reverse;
+}
+
+.adventurer-party[data-phase='releasing'] .adventurer {
+  --pull-delay: var(--release-delay);
+}
+
+.adventurer-party[data-phase='releasing'] .adventurer-shadow {
+  animation-duration: 1.82s;
+}
+
+.adventurer-party[data-round='2'] {
+  --console-x: calc(1060 / 1672 * 100%);
+  --console-y: calc(374 / 941 * 100%);
+  --vortex-tint: hue-rotate(315deg);
+}
+
+.adventurer-party[data-round='3'] {
+  --console-x: calc(1371 / 1672 * 100%);
+  --console-y: calc(506 / 941 * 100%);
+  --vortex-tint: hue-rotate(82deg);
+}
+
+.round-one-capture {
+  filter: var(--vortex-tint, none);
 }
