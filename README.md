@@ -21,7 +21,7 @@ An interactive pixel-art campus map for Gameverse, the gaming week presented by 
 
 ## Run locally
 
-Requirements are Node.js **20.9 or later** and npm. Use the included lockfile to install dependencies.
+Use Node.js **22.x** and npm. Install dependencies from the included lockfile.
 
 ```bash
 git clone https://github.com/Akif-Sait/oscodehunt.git

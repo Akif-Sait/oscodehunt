@@ -7,7 +7,7 @@ export async function verifyToken(token, signal) {
     headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
     credentials: 'same-origin',
     cache: 'no-store',
-    signal,
+    signal: AbortSignal.any([signal, AbortSignal.timeout(15_000)]),
     body: JSON.stringify({ token }),
   });
 

@@ -1,8 +1,7 @@
 'use client';
 
 import { useEffect, useReducer } from 'react';
-import { dispatchHuntCommand, HUNT_COMMANDS } from './hunt-commands';
-import TypingSprint from './round-three/typing-sprint';
+import { HUNT_COMMANDS } from './hunt-commands';
 import RoundOneCapture from './round-one-capture';
 import './adventurer-party.css';
 
@@ -132,6 +131,10 @@ export default function AdventurerParty({ moving }) {
     };
   }, []);
 
+  useEffect(() => {
+    if (phase === 'gone' && location.round === 3) window.location.assign('/round-three');
+  }, [phase, location.round]);
+
   function finish() {
     dispatch({ type: 'finish', phase, reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches });
   }
@@ -156,9 +159,6 @@ export default function AdventurerParty({ moving }) {
         ))}
         {portal && <RoundOneCapture key={phase} onFinish={finish} />}
       </div>
-      {phase === 'gone' && location.round === 3 && (
-        <TypingSprint onReturn={() => dispatchHuntCommand(HUNT_COMMANDS.releaseRound3)} />
-      )}
     </>
   );
 }
